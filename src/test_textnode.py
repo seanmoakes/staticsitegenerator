@@ -17,7 +17,9 @@ class TestTextNode(unittest.TestCase):
     def test_type_neq(self):
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.ITALIC)
-        self.assertNotEqual(node, node2, f"No difference\n\n{node.text_type}\n{node2.text_type}")
+        self.assertNotEqual(
+            node, node2, f"No difference\n\n{node.text_type}\n{node2.text_type}"
+        )
 
     def test_url_neq(self):
         node = TextNode("This is a text node", TextType.BOLD)
@@ -26,11 +28,11 @@ class TestTextNode(unittest.TestCase):
 
     def test_url_isnone(self):
         node = TextNode("This is a text node", TextType.BOLD)
-        self.assertIsNone(node.url, 'URL should be None')
+        self.assertIsNone(node.url, "URL should be None")
 
     def test_url_is_not_none(self):
         node = TextNode("This is a text node", TextType.BOLD, "www.boot.dev")
-        self.assertIsNotNone(node.url, 'URL should not be None')
+        self.assertIsNotNone(node.url, "URL should not be None")
 
     def test_repr(self):
         node = TextNode("This is a text node", TextType.TEXT, "https://www.boot.dev")

@@ -11,7 +11,7 @@ class TestHTMLNode(unittest.TestCase):
             {"class": "greeting", "href": "https://boot.dev"},
         )
         self.assertEqual(
-            node.props_to_html(), 
+            node.props_to_html(),
             ' class="greeting" href="https://boot.dev"',
         )
 
