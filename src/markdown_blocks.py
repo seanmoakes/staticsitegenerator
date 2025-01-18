@@ -97,7 +97,7 @@ def paragraph_to_html_node(block):
     return ParentNode("p", children)
 
 
-def heading_to_html_node(block):
+def get_heading_level(block):
     level = 0
     for char in block:
         if char == "#":
@@ -106,6 +106,11 @@ def heading_to_html_node(block):
             break
     if level + 1 >= len(block):
         raise ValueError(f"Invalid heading level: {level}")
+    return level
+
+
+def heading_to_html_node(block):
+    level = get_heading_level(block)
     text = block[level + 1 :]
     children = text_to_children(text)
     return ParentNode(f"h{level}", children)
