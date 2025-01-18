@@ -2,13 +2,13 @@
 import os
 import shutil
 from copystatic import copy_src_contents
-from generate_html import generate_page
+from generate_html import generate_pages_recursive
 
 dir_src_static = "./static"
 dir_dst_public = "./public"
-file_content = "./content/index.md"
+dir_content = "./content"
 file_template = "./template.html"
-file_dest = "./public/index.html"
+# file_dest = "./public/index.html"
 
 
 def main():
@@ -18,8 +18,7 @@ def main():
 
     print(f"Copying contents of {dir_src_static} to {dir_dst_public}")
     copy_src_contents(dir_src_static, dir_dst_public)
-
-    generate_page(file_content, file_template, file_dest)
+    generate_pages_recursive(dir_content, file_template, dir_dst_public)
 
 
 main()

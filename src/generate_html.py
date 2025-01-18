@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from markdown_blocks import (
     markdown_to_html_node,
 )
@@ -13,32 +14,29 @@ def extract_title(markdown):
 
 
 def generate_page(from_path, template_path, dest_path):
-    # Print message
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
-
-    # read files
     markdown = read_file_contents(from_path)
     template = read_file_contents(template_path)
-
-    # convert markdown to HTML string
-
     node = markdown_to_html_node(markdown)
     html = node.to_html()
-
-    # Get title
     title = extract_title(markdown)
-
-    # Replace {{ Title }} and {{ Content }}
-    # placeholders in the template string
-    print(template)
-    print("\nReplacing Title and Content\n")
     generated = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
-    print(generated)
-
-    # Write html page to dest_path
     with open(dest_path, "w") as f:
         f.write(generated)
         f.close()
+
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+    for filename in os.listdir(dir_path_content):
+        src_path = os.path.join(dir_path_content, filename)
+        dst_path = os.path.join(dest_dir_path, filename)
+        if not os.path.isfile(src_path):
+            generate_pages_recursive(src_path, template_path, dst_path)
+        elif Path(src_path).suffix == ".md":
+            html_path = Path(dst_path).with_suffix(".html")
+            generate_page(src_path, template_path, html_path)
 
 
 def read_file_contents(file_path):
