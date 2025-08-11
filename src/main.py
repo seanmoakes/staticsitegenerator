@@ -1,14 +1,18 @@
 # from textnode import TextNode, TextType
 import os
 import shutil
+import sys
 from copystatic import copy_src_contents
 from generate_html import generate_pages_recursive
 
 dir_src_static = "./static"
-dir_dst_public = "./public"
+dir_dst_public = "./docs"
 dir_content = "./content"
 file_template = "./template.html"
-# file_dest = "./public/index.html"
+
+basepath = "/"
+if len(sys.argv) > 1:
+    basepath = sys.argv[1]
 
 
 def main():
@@ -18,7 +22,7 @@ def main():
 
     print(f"Copying contents of {dir_src_static} to {dir_dst_public}")
     copy_src_contents(dir_src_static, dir_dst_public)
-    generate_pages_recursive(dir_content, file_template, dir_dst_public)
+    generate_pages_recursive(dir_content, file_template, dir_dst_public, basepath)
 
 
 main()
